@@ -1,26 +1,28 @@
-import React from 'react';
-import logo from './logo.svg';
+
+
+import React, { useState } from "react";
 import './App.css';
 
-function App() {
+import Form from "./components/Form";
+import Boxes from "./components/Boxes";
+
+export default function App() {
+  const [boxes, setBoxes] = useState(["Box", "Box2"]);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    
+    <div className = "page">
+      <Form onSubmit={createBox} />
+      <Boxes boxes={boxes} onClick={deleteBox} />
     </div>
   );
-}
 
-export default App;
+  function createBox(newBox) {
+    setBoxes([...boxes, newBox]);
+  }
+
+  function deleteBox(boxToDelete) {
+    const index = boxes.findIndex(box => box === boxToDelete);
+    setBoxes([...boxes.slice(0, index), ...boxes.slice(index + 1)]);
+  }
+}
